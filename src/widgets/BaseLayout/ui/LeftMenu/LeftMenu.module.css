@@ -1,0 +1,9 @@
+.container {
+    border-right: .5px solid #cbcbcb;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

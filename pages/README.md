@@ -1,0 +1,1 @@
+For avoid problems with NextJs Page Router
