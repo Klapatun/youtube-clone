@@ -41,10 +41,16 @@ export const AddVideoPage = () => {
   const [videoId, setVideoId] = useState('');
 
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {          
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {          
           const urlModel = youtubeParser(data.videoUrl);
           if(urlModel?.id) {
               setVideoId(urlModel.id);
+              await fetch('/api/videos', {method: 'POST', body: JSON.stringify({videoId: urlModel.id})});
+              const serverData = await fetch('/api/videos');
+
+              const response = await serverData.json();
+
+              console.log(response);
           }
   }
 
@@ -65,7 +71,6 @@ export const AddVideoPage = () => {
           height="315" 
           src={`https://www.youtube.com/embed/${videoId}`}
           title="YouTube video player" 
-          frameBorder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
           referrerPolicy="strict-origin-when-cross-origin" 
           allowFullScreen
