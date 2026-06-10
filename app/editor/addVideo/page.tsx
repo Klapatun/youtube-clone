@@ -1,7 +1,9 @@
-export {addVideoMetadata as metadata} from '../../../src/app/metadatas';
+import { AddVideoPage } from '@/src/pages/AddVideoPage';
+
+export {addVideoMetadata as metadata} from '@/src/app/metadatas';
 
 export default function AddVideo() {
   return (
-    <div>add video</div>
+      <AddVideoPage />
   );
 }
