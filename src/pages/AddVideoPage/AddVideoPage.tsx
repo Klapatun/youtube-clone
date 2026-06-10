@@ -1,6 +1,6 @@
 'use client'
 
-import { youtubeParser } from "@/src/shared/libs/url-parsers";
+import { isAllowedHost, youtubeParser } from "@/src/shared/libs/url-parsers";
 import { useState } from "react";
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
@@ -11,7 +11,27 @@ type Inputs = {
 };
 
 const schema = z.object({
-  videoUrl: z.string().min(1, {message: 'Поле не должно быть пустым'}),
+  videoUrl: z
+    .string()
+    .min(1, {message: 'Поле не должно быть пустым'})
+    .superRefine((url, context) => {
+      try {
+        const urlModel = new URL(url);
+        if(!isAllowedHost(urlModel)) {
+          context.addIssue({
+            code: 'custom',
+            message: 'Поле должно содержать ссылку на YouTube',
+            input: url
+          });
+        }
+      } catch {
+        context.addIssue({
+          code: 'custom',
+          message: 'Поле должно содержать ссылку',
+          input: url
+        });
+      }
+    })
 });
 
 export const AddVideoPage = () => {
@@ -27,8 +47,6 @@ export const AddVideoPage = () => {
               setVideoId(urlModel.id);
           }
   }
-  
-  console.log(errors)
 
   return (
     <div>

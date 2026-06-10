@@ -1,3 +1,5 @@
+import {isAllowedHost} from './isAllowedHost';
+
 interface YouTubeLinkInfo {
   id: string;
   type: 'video' | 'short' | 'playlist' | 'channel' | 'unknown';
@@ -14,18 +16,7 @@ export function youtubeParser(url: string): YouTubeLinkInfo | null {
     const urlObj = new URL(url.trim());
 
     // Проверяем, что это действительно YouTube
-    const validDomains = [
-      'youtube.com',
-      'www.youtube.com',
-      'm.youtube.com',
-      'music.youtube.com',
-      'youtu.be',
-      'www.youtu.be',
-      'youtube-nocookie.com',
-      'www.youtube-nocookie.com',
-    ];
-
-    if (!validDomains.includes(urlObj.hostname)) {
+    if (!isAllowedHost(urlObj)) {
       return null;
     }
 
