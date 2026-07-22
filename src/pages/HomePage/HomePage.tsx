@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState } from "react"
+import Image from 'next/image';
 import styles from './HomePage.module.css';
+import Link from "next/link";
 
 export const HomePage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -34,17 +36,11 @@ export const HomePage = () => {
 
     return <div>
         {data?.length ? (
-            data.map(item => <div className={styles.itemWrapper} key={item}>
-                <iframe 
-                width="150" 
-                src={`https://www.youtube.com/embed/${item}`}
-                title="YouTube video player" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerPolicy="strict-origin-when-cross-origin" 
-                allowFullScreen
-                >
-                </iframe>
-            </div>)
+            data.map(videoId => (
+                <Link className={styles.itemWrapper} href={`/video/${videoId}`} key={videoId}>
+                    <Image width={250} height={250} src={`https://img.youtube.com/vi/${videoId}/hdefault.jpeg`} alt="Видео с ютюба" />
+                </Link>
+            ))
         ) : (<div>Данных нет</div>)}
     </div>
 }

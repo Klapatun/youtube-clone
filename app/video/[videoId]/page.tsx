@@ -1,3 +1,5 @@
+import {VideoPage as VideoPageComponent} from "@/src/pages/VideoPage"
+
 export {videoMetadata as metadata} from '../../../src/app/metadatas'
 
 type VideoPageProps = {
@@ -7,6 +9,6 @@ type VideoPageProps = {
 export default async function VideoPage({params}: VideoPageProps) {
     const data = await params;
     return (
-      <div>videoId: {data.videoId}</div>
+      <VideoPageComponent videoId={data.videoId} />
     );
 }
