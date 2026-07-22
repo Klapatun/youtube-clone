@@ -46,11 +46,6 @@ export const AddVideoPage = () => {
           if(urlModel?.id) {
               setVideoId(urlModel.id);
               await fetch('/api/videos', {method: 'POST', body: JSON.stringify({videoId: urlModel.id})});
-              const serverData = await fetch('/api/videos');
-
-              const response = await serverData.json();
-
-              console.log(response);
           }
   }
 

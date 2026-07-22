@@ -21,9 +21,9 @@ export async function POST(request:Request) {
     const data: {videoId: string} = await request.json();
 
     if(videosData.has(data.videoId)) {
-        return NextResponse.json({ok: false}, {status: 400});
+        return NextResponse.json({ok: false, error: 'Видео ранее уже было добавлено'}, {status: 409});
     }
 
     videosData.add(data.videoId);
-    return NextResponse.json({ok: true});
+    return NextResponse.json({ok: true}, {status: 201});
 }
